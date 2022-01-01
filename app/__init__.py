@@ -32,5 +32,4 @@ bootstrap = Bootstrap(app)
 #           within 60 seconds of launch
 # Replace "web" with "worker" in your Procfile.
 # you need to run heroku ps:scale worker=1 since workers are not scaled 
-# automatically (and you should run heroku ps:scale web=0 to remove the 
-# web cpu
+# automatically (and you should run heroku ps:scale web=0 to remove the web cpu)
