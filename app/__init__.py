@@ -27,3 +27,10 @@ bootstrap = Bootstrap(app)
 #   $ git commit -a -m "heroku deployment changes"
 # And then you can run the following to start the deployment:
 #   $ git push heroku master
+#
+#ERROR -> Error R10 (Boot timeout) -> Web process failed to bind to $PORT 
+#           within 60 seconds of launch
+# Replace "web" with "worker" in your Procfile.
+# you need to run heroku ps:scale worker=1 since workers are not scaled 
+# automatically (and you should run heroku ps:scale web=0 to remove the 
+# web cpu
