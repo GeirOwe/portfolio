@@ -30,6 +30,7 @@ bootstrap = Bootstrap(app)
 #
 #ERROR -> Error R10 (Boot timeout) -> Web process failed to bind to $PORT 
 #           within 60 seconds of launch
-# Replace "web" with "worker" in your Procfile.
-# you need to run heroku ps:scale worker=1 since workers are not scaled 
-# automatically (and you should run heroku ps:scale web=0 to remove the web cpu)
+#if __name__ == '__main__':
+    # Bind to PORT if defined, otherwise default to 5000.
+    #port = int(os.environ.get('PORT', 5000))
+    #app.run(host='0.0.0.0', port=port)

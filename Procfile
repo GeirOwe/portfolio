@@ -1,1 +1,1 @@
-web: flask run; gunicorn main:app -b \"0.0.0.0:\$PORT\" -w 3
+web: flask run; gunicorn main:app --server.port $PORT
