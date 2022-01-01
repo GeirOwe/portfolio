@@ -23,3 +23,7 @@ bootstrap = Bootstrap(app)
 # heroku config:set FLASK_APP=main.py
 #Procfile: Heroku Procfile.
 # web: flask db upgrade; flask translate compile; gunicorn microblog:app
+# you first need to make sure that your changes are committed:
+#   $ git commit -a -m "heroku deployment changes"
+# And then you can run the following to start the deployment:
+#   $ git push heroku master
