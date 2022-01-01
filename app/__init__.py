@@ -8,9 +8,18 @@ app.config.from_object(Config)
 from app import routes
 bootstrap = Bootstrap(app)
 
+# HEROKU deployment
+# https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xviii-deployment-on-heroku
+#
+# https://dashboard.heroku.com/apps/garyoinvest
+#
 # (virtu) $ pip freeze > requirements.txt
 # (virtu) geirowe@geirs-imac portfolio % heroku apps:create garyoinvest
 # Creating ⬢ garyoinvest... done
 # https://garyoinvest.herokuapp.com/ | https://git.heroku.com/garyoinvest.git
 # To push the current branch and set the remote as upstream, use
 # git push --set-upstream heroku master
+# heroku login
+# heroku config:set FLASK_APP=main.py
+#Procfile: Heroku Procfile.
+# web: flask db upgrade; flask translate compile; gunicorn microblog:app
