@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h4>Portefølje oversikt (i NOK)</h4>
+    <br>
+    <div><p>Total verdi: {{ "{:,.0f}". format(value) }}</p>
+        <p>Total fortjeneste: {{ "{:,.0f}". format(profit) }}</p></div>
+    <br><br>
+    {% if form %}
+        {{ wtf.quick_form(form) }}
+
+    {% endif %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Aktiva</th>
+                <th>Andeler</th>
+                <th>Pålydende</th>
+                <th>Kurs nå</th>
+                <th>Fortjeneste</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.ticker.upper() }}</td>
+                    <td>{{ post.amount }}</td>
+                    <td>{{ "{:,.2f}". format(post.buyPrice) }}</td>
+                    <td>{{ "{:,.2f}". format(post.currPrice) }}</td>
+                    <td>{{ "{:,.2f}". format(post.profit) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

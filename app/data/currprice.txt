@@ -1,0 +1,5 @@
+usd 8.81 usd
+eth 3736.99 usd
+ada 1.339 usd
+ftnt 359.40 usd
+nvda 294.11 usd
