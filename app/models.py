@@ -43,10 +43,10 @@ class Ticker():
 #get current date
 def get_todays_date():
     today = "04.01.2022"
-    today = date.today()
+    #dateX = date.today()
     #format to dd.mm.YY
-    dateX = today.strftime("%d.%m.%Y")
-    return dateX
+    #today = dateX.strftime("%d.%m.%Y")
+    return today
 
 #find current listing for the currency
 def get_currency(currency, valutaList):
