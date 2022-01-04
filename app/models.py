@@ -1,4 +1,5 @@
 from decimal import Decimal
+from datetime import date
 
 #Currency class
 class Currency():
@@ -38,6 +39,14 @@ class Ticker():
         value = self.get_amount() * self.get_currPrice()
         return value-cost
 #end class definition
+
+#get current date
+def get_todays_date():
+    today = "04.01.2022"
+    today = date.today()
+    #format to dd.mm.YY
+    dateX = today.strftime("%d.%m.%Y")
+    return dateX
 
 #find current listing for the currency
 def get_currency(currency, valutaList):

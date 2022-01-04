@@ -6,6 +6,7 @@
     <br>
     <div><p>Total verdi: {{ "{:,.0f}". format(value) }}</p>
         <p>Total fortjeneste: {{ "{:,.0f}". format(profit) }}</p></div>
+        <p>Kurser fra: {{ today }}</p></div>
     <br><br>
     {% if form %}
         {{ wtf.quick_form(form) }}

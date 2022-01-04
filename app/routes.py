@@ -34,5 +34,8 @@ def input():
 
 @app.route('/output')
 def output():
+    #read current portfolio based on current prices
     totValue, totProfit, portfolioList = start_the_engine()
-    return render_template('output.html', title='Portefølje', posts=portfolioList, value = totValue, profit = totProfit)
+    #get current date
+    today = get_todays_date()
+    return render_template('output.html', title='Portefølje', posts=portfolioList, value = totValue, profit = totProfit, today=today)
