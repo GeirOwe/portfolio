@@ -19,6 +19,7 @@ class Ticker():
         self.ticker = ticker
         self.amount = amount
         self.buyPrice = buyPrice
+        self.currPrice = 0.0
     
     def get_ticker(self):
         return self.ticker
@@ -61,6 +62,7 @@ def get_currency(currency, valutaList):
 
 #convert to decimal from string
 def str_to_dec(stringDec):
+    stringDec = stringDec.replace(",", ".") 
     decimal = float(stringDec.strip(" '"))
     return decimal
 
@@ -96,7 +98,7 @@ def get_the_data():
 def addPrices(theData):
      #read the prices from the file
     thePrices = open('./app/data/currprice.txt', 'r')
-    valuta = ["usd", "nok", "date"]
+    notTickers = ["usd", "nok", "date"]
     valutaList = []
     # update the current prices of all the tickers
     for element in thePrices:
@@ -104,7 +106,7 @@ def addPrices(theData):
         # the data element contain -> ticker, current_price, currency
         splitX = elementTrimmed.split()
         #add currencies to currency objects and date to date string
-        if splitX[0] in valuta:
+        if splitX[0] in notTickers:
             if splitX[0] == "date":
                 today = splitX[1]
             else:
@@ -112,7 +114,7 @@ def addPrices(theData):
                 currency = Currency(splitX[0], currencyValue)
                 valutaList.append(currency)
         else:
-            #split the data -> ticker, tickerValue, currency
+            #split the data -> ticker, kursNå, currency
             ticker = splitX[0]
             tickerValue = str_to_dec(splitX[1])
             currency = splitX[2]

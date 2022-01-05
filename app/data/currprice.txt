@@ -1,6 +1,13 @@
 date 05.01.2022
 usd 8.86 
-eth 3811.27 usd
-ada 1.338 usd
-nvda 292.90 usd
+ada 1,45 usd
+usd 8,86 
+ada 1,348 usd
+eth 3281,13 usd
 ftnt 322.14 usd
+nvda 292,9 usd
+usd 8,86 
+ada 1,348 usd
+eth 3822,63 usd
+ftnt 322.14 usd
+nvda 292.90 usd
