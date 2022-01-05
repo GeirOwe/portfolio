@@ -22,8 +22,10 @@ def input():
         if form.send.data:
             #lagre data og avslutt
             currentTickerData.append(form.ticker.data+" "+form.currentValue.data+" "+form.currency.data)
+            #get current date
+            today = get_todays_date()
             #store the current prices in a file
-            storePrices(currentTickerData)
+            storePrices(currentTickerData, today)
             return redirect(url_for('home'))
         if form.oneMore.data:
             #lagre data og fortsett med å lese inn data
@@ -35,7 +37,5 @@ def input():
 @app.route('/output')
 def output():
     #read current portfolio based on current prices
-    totValue, totProfit, portfolioList = start_the_engine()
-    #get current date
-    today = get_todays_date()
+    totValue, totProfit, portfolioList, today = start_the_engine()
     return render_template('output.html', title='Portefølje', posts=portfolioList, value = totValue, profit = totProfit, today=today)

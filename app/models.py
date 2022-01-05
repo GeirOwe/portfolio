@@ -42,10 +42,10 @@ class Ticker():
 
 #get current date
 def get_todays_date():
-    today = "04.01.2022"
-    #dateX = date.today()
+    #today = "04.01.2022"
+    dateX = date.today()
     #format to dd.mm.YY
-    #today = dateX.strftime("%d.%m.%Y")
+    today = dateX.strftime("%d.%m.%Y")
     return today
 
 #find current listing for the currency
@@ -96,18 +96,21 @@ def get_the_data():
 def addPrices(theData):
      #read the prices from the file
     thePrices = open('./app/data/currprice.txt', 'r')
-    valuta = ["usd", "nok"]
+    valuta = ["usd", "nok", "date"]
     valutaList = []
     # update the current prices of all the tickers
     for element in thePrices:
         elementTrimmed = element.strip()
         # the data element contain -> ticker, current_price, currency
         splitX = elementTrimmed.split()
-        #add currencies to currency objects
+        #add currencies to currency objects and date to date string
         if splitX[0] in valuta:
-            currencyValue = str_to_dec(splitX[1])   #convert from string to dec
-            currency = Currency(splitX[0], currencyValue)
-            valutaList.append(currency)
+            if splitX[0] == "date":
+                today = splitX[1]
+            else:
+                currencyValue = str_to_dec(splitX[1])   #convert from string to dec
+                currency = Currency(splitX[0], currencyValue)
+                valutaList.append(currency)
         else:
             #split the data -> ticker, tickerValue, currency
             ticker = splitX[0]
@@ -121,7 +124,7 @@ def addPrices(theData):
                 if theData[i].get_ticker() == ticker:
                     theData[i].set_currPrice(tickerValue*currencyValue)
                 i += 1
-    return
+    return today
 
 #loop thru current portfolio and get profit and total value
 def get_totals(theData):
@@ -158,19 +161,22 @@ def start_the_engine():
     theData = get_the_data()
     #read all the current prices for the tickers from user
     # add current price to object
-    addPrices(theData)
+    today = addPrices(theData)
 
     #calculate total portfolio value and total fortjeneste
     totValue, totProfit, portfolioList = get_totals(theData)
     #store the data in a new file
-    return totValue, totProfit, portfolioList
+    return totValue, totProfit, portfolioList, today
 
 #store portfolio ad current rices in a new file
-def storePrices(currentTickerData):
+def storePrices(currentTickerData, today):
     newFile = open('./app/data/currprice.txt', 'w')
     #loop thru all objects and add to txt file
     i = 0
     rows = []
+    #first row is the current date
+    rows.append("date "+today+"\n")
+    #then add remaining rows from user input
     while i < len(currentTickerData):
         rows.append(currentTickerData[i] + "\n")
         i += 1
