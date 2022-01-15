@@ -1,4 +1,4 @@
-date 10.01.2022
+date 15.01.2022
 usd 8.77
 nok 1.0
 nbx 8.9 nok
