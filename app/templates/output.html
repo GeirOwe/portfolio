@@ -29,7 +29,6 @@
                     <td>{{ "{:,.0f}". format(post.amount) }}</td>
                     <td>{{ "{:,.0f}". format(post.buyPrice) }}</td>
                     <td>{{ "{:,.0f}". format(post.currPrice) }}</td>
-                    <td>{{ "{:,.0f}". format(post.profit) }}</td>
                     <td>{{ "{:,.0f}". format((post.profit / (post.amount*post.buyPrice))*100) }}%</td>
                 </tr>
             {% endfor %}
