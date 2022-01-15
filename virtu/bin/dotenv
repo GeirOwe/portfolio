@@ -1,4 +1,4 @@
-#!/Users/geirowe/Documents/GitHub/portfolio/virtu/bin/python3
+#!/Users/geirowe/Documents/GitHub/portfolio/virtu/bin/python3.9
 # -*- coding: utf-8 -*-
 import re
 import sys
