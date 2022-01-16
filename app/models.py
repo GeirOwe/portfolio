@@ -200,7 +200,7 @@ def check_alpha(symbolX):
     # alpha vantage api syntax
     #url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=ALPHA_KEY'
     tickerX = 'symbol=' + symbolX
-    #apiX = '&apikey='+os.environ.get('ALPHA_API_KEY') 9PN7WYC36TLO0Z09
+    #apiX = '&apikey='+os.environ.get('ALPHA_API_KEY')
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&'+ tickerX + apiX
     
@@ -213,4 +213,42 @@ def check_alpha(symbolX):
     # the closing price is in element 05. price
     price = xDict['05. price']
     priceX = float(price.strip(" '"))
+    #currency_API()
+    #crypto_API()
     return priceX
+
+def currency_API():
+    # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
+    #url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=CNY&apikey=demo'
+    apiX = '&apikey='+'9PN7WYC36TLO0Z09'
+    currX = '&from_currency=USD&to_currency=NOK'
+    url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currX+apiX
+    r = requests.get(url)
+
+    # the data received from the API    
+    apiData = r.json()
+    #fecth the global quote
+    xDict = apiData.get('Realtime Currency Exchange Rate')
+    # the closing price is in element 5
+    price = xDict['5. Exchange Rate']
+    priceX = float(price.strip(" '"))
+    print(priceX)
+    return
+
+def crypto_API():
+    # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
+    #url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=CNY&apikey=demo'
+    apiX = '&apikey='+'9PN7WYC36TLO0Z09'
+    currX = '&from_currency=ADA&to_currency=NOK'
+    url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currX+apiX
+    r = requests.get(url)
+
+    # the data received from the API    
+    apiData = r.json()
+    #fecth the global quote
+    xDict = apiData.get('Realtime Currency Exchange Rate')
+    # the closing price is in element 5
+    price = xDict['5. Exchange Rate']
+    priceX = float(price.strip(" '"))
+    print(priceX)
+    return
