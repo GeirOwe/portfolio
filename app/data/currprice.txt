@@ -1,8 +1,8 @@
 date 16.01.2022
-usd 8.77
-nok 1.0
+usd 8.77 
+nok 1.0 
 nbx 8.9 nok
-ada 1.370 usd
-eth 3332,76 usd
-ftnt 312.54 usd
 nvda 269.42 usd
+ftnt 312.54 usd
+ada 1.366 usd
+eth 3330.96 usd
