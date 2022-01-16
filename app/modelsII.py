@@ -7,13 +7,13 @@ import requests
 def get_prices_from_API(theData):
     stocks = ['nvda','ftnt']
     crypto = ['eth','ada']
+    #read current usd rate
+    usdNOK = currency_API()
     #theData contains a list of Ticker objects in my portfolio
     i = 0
     while i < len(theData):
         ticker = theData[i].get_ticker()
         if ticker in stocks:
-            #read current usd rate
-            usdNOK = currency_API()
             #get todays price from API
             price = stock_API(ticker)
             theData[i].set_currPrice(price*usdNOK)
@@ -232,5 +232,4 @@ def crypto_API(symbolX):
     # the closing price is in element 5
     price = xDict['5. Exchange Rate']
     priceX = float(price.strip(" '"))
-    print(priceX)
     return priceX
