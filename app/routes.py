@@ -30,7 +30,6 @@ def input():
         if form.oneMore.data:
             #lagre data og fortsett med å lese inn data
             currentTickerData.append(form.ticker.data+" "+form.currentValue.data+" "+form.currency.data)
-
             return redirect(url_for('input'))   
     return render_template('input.html', title='Input', form=form)
 

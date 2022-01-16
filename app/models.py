@@ -1,5 +1,7 @@
 from decimal import Decimal
 from datetime import date
+import os
+import requests
 
 #Currency class
 class Currency():
@@ -99,6 +101,7 @@ def addPrices(theData):
      #read the prices from the file
     thePrices = open('./app/data/currprice.txt', 'r')
     notTickers = ["usd", "nok", "date"]
+    useAPI = ["nvda", "ftnt"]
     valutaList = []
     # update the current prices of all the tickers
     for element in thePrices:
@@ -116,7 +119,11 @@ def addPrices(theData):
         else:
             #split the data -> ticker, kursNå, currency
             ticker = splitX[0]
-            tickerValue = str_to_dec(splitX[1])
+            if ticker in useAPI:
+                ##check the Alpha Vantage API
+                tickerValue = check_alpha(ticker.upper())
+            else:
+                tickerValue = str_to_dec(splitX[1])
             currency = splitX[2]
             # get the current listing for the curency
             currencyValue = get_currency(currency, valutaList)
@@ -141,6 +148,7 @@ def get_totals(theData):
         amount = theData[i].get_amount()
         buyPrice = theData[i].get_buyPrice()
         currPrice = theData[i].get_currPrice()
+
         #accumulate totals, profit and portfolio
         totProfit += profit
         totValue += int(theData[i].get_value())
@@ -186,3 +194,22 @@ def storePrices(currentTickerData, today):
     newFile.writelines(rows)
     newFile.close()
     return
+
+#test if the alpha vantage api works
+def check_alpha(symbolX):
+    # alpha vantage api syntax
+    #url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=ALPHA_KEY'
+    tickerX = 'symbol=' + symbolX
+    apiX = '&apikey='+os.environ.get('ALPHA_API_KEY')
+    url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&'+ tickerX + apiX
+    
+    #call the API
+    r = requests.get(url)
+    # the data received from the API    
+    apiData = r.json()
+    #fecth the global quote
+    xDict = apiData.get('Global Quote')
+    # the closing price is in element 05. price
+    price = xDict['05. price']
+    priceX = float(price.strip(" '"))
+    return priceX
