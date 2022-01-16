@@ -4,5 +4,5 @@ usd 8.77
 nbx 8.9 nok
 eth 3320.06 usd
 ada 1.397 usd
-nvda 0 usd
-ftnt 0 usd
+nvda 269.42 usd
+ftnt 312.54 usd
