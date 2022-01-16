@@ -119,11 +119,7 @@ def addPrices(theData):
         else:
             #split the data -> ticker, kursNå, currency
             ticker = splitX[0]
-            if ticker in useAPI:
-                ##check the Alpha Vantage API
-                tickerValue = check_alpha(ticker.upper())
-            else:
-                tickerValue = str_to_dec(splitX[1])
+            tickerValue = str_to_dec(splitX[1])
             currency = splitX[2]
             # get the current listing for the curency
             currencyValue = get_currency(currency, valutaList)
