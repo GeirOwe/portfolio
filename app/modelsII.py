@@ -3,17 +3,27 @@ from datetime import date
 import os
 import requests
 
-#Currency class
-class Currency():
-    def __init__(self, curr, price):
-        self.curr = curr
-        self.price = price
-    def get_price(self):
-        return self.price    
-    
-    def get_curr(self):
-        return self.curr
-#end currency class
+#read API and update prices
+def get_prices_from_API(theData):
+    stocks = ['nvda','ftnt']
+    crypto = ['eth','ada']
+    #theData contains a list of Ticker objects in my portfolio
+    i = 0
+    while i < len(theData):
+        ticker = theData[i].get_ticker()
+        if ticker in stocks:
+            #read current usd rate
+            usdNOK = currency_API()
+            #get todays price from API
+            price = stock_API(ticker)
+            theData[i].set_currPrice(price*usdNOK)
+        elif ticker in crypto:
+            #get todays price from API - this price is in NOK!
+            price = crypto_API(ticker)
+            theData[i].set_currPrice(price)
+        
+        i += 1
+    return theData
 
 #Tcker class
 class Ticker():
@@ -51,17 +61,6 @@ def get_todays_date():
     today = dateX.strftime("%d.%m.%Y")
     return today
 
-#find current listing for the currency
-def get_currency(currency, valutaList):
-    #loop thru all currencies and get the price
-    value = 1.0
-    i = 0
-    while i < len(valutaList):
-        if valutaList[i].get_curr() == currency:
-            value = valutaList[i].get_price()
-        i += 1
-    return value
-
 #convert to decimal from string
 def str_to_dec(stringDec):
     stringDec = stringDec.replace(",", ".") 
@@ -98,40 +97,25 @@ def get_the_data():
 
 # update the current prices of all the tickers
 def addPrices(theData):
-     #read the prices from the file
+    #get current date
+    today = get_todays_date()
+    #read the norwegian prices from the file
     thePrices = open('./app/data/currprice.txt', 'r')
-    notTickers = ["usd", "nok", "date"]
-    useAPI = ["nvda", "ftnt"]
-    valutaList = []
+    stocks = ["nbx"]
     # update the current prices of all the tickers
     for element in thePrices:
         elementTrimmed = element.strip()
         # the data element contain -> ticker, current_price, currency
         splitX = elementTrimmed.split()
         #add currencies to currency objects and date to date string
-        if splitX[0] in notTickers:
-            if splitX[0] == "date":
-                today = splitX[1]
-            else:
-                currencyValue = str_to_dec(splitX[1])   #convert from string to dec
-                currency = Currency(splitX[0], currencyValue)
-                valutaList.append(currency)
-        else:
-            #split the data -> ticker, kursNå, currency
+        if splitX[0] in stocks:
             ticker = splitX[0]
-            if ticker in useAPI:
-                ##check the Alpha Vantage API
-                tickerValue = check_alpha(ticker.upper())
-            else:
-                tickerValue = str_to_dec(splitX[1])
-            currency = splitX[2]
-            # get the current listing for the curency
-            currencyValue = get_currency(currency, valutaList)
-            #update the current price of the ticker
+            tickerValue = str_to_dec(splitX[1])
+            #update the current price of the ticker in NOK
             i = 0
             while i < len(theData):
                 if theData[i].get_ticker() == ticker:
-                    theData[i].set_currPrice(tickerValue*currencyValue)
+                    theData[i].set_currPrice(tickerValue)
                 i += 1
     return today
 
@@ -167,14 +151,16 @@ def get_totals(theData):
     return totValue, totProfit, portfolioList
 
 def start_the_engine():
-    #get the data and read them into a list
+    #get the portfolio data and read them into a list
     theData = get_the_data()
-    #read all the current prices for the tickers from user
+    #read all the current prices from US from the API
+    thePortfolio = get_prices_from_API(theData)
+
     # add current price to object
-    today = addPrices(theData)
+    today = addPrices(thePortfolio)
 
     #calculate total portfolio value and total fortjeneste
-    totValue, totProfit, portfolioList = get_totals(theData)
+    totValue, totProfit, portfolioList = get_totals(thePortfolio)
     #store the data in a new file
     return totValue, totProfit, portfolioList, today
 
@@ -196,7 +182,7 @@ def storePrices(currentTickerData, today):
     return
 
 #test if the alpha vantage api works
-def check_alpha(symbolX):
+def stock_API(symbolX):
     # alpha vantage api syntax
     #url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=ALPHA_KEY'
     tickerX = 'symbol=' + symbolX
@@ -232,14 +218,13 @@ def currency_API():
     # the closing price is in element 5
     price = xDict['5. Exchange Rate']
     priceX = float(price.strip(" '"))
-    print(priceX)
-    return
+    return priceX
 
-def crypto_API():
+def crypto_API(symbolX):
     # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
     #url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=CNY&apikey=demo'
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
-    currX = '&from_currency=ADA&to_currency=NOK'
+    currX = '&from_currency='+symbolX+'&to_currency=NOK'
     url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currX+apiX
     r = requests.get(url)
 
@@ -251,4 +236,4 @@ def crypto_API():
     price = xDict['5. Exchange Rate']
     priceX = float(price.strip(" '"))
     print(priceX)
-    return
+    return priceX
