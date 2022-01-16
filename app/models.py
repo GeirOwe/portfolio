@@ -200,7 +200,8 @@ def check_alpha(symbolX):
     # alpha vantage api syntax
     #url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=ALPHA_KEY'
     tickerX = 'symbol=' + symbolX
-    apiX = '&apikey='+os.environ.get('ALPHA_API_KEY')
+    #apiX = '&apikey='+os.environ.get('ALPHA_API_KEY') 9PN7WYC36TLO0Z09
+    apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&'+ tickerX + apiX
     
     #call the API
