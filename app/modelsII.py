@@ -183,15 +183,14 @@ def storePrices(currentTickerData, today):
 
 #test if the alpha vantage api works
 def stock_API(symbolX):
+    xDict = []
     # alpha vantage api syntax
     #url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=ALPHA_KEY'
     tickerX = 'symbol=' + symbolX
-    #apiX = '&apikey='+os.environ.get('ALPHA_API_KEY')
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&'+ tickerX + apiX
-    
-    #call the API
     r = requests.get(url)
+
     # the data received from the API    
     apiData = r.json()
     #fecth the global quote
@@ -199,12 +198,10 @@ def stock_API(symbolX):
     # the closing price is in element 05. price
     price = xDict['05. price']
     priceX = float(price.strip(" '"))
-    #currency_API()
-    #crypto_API()
     return priceX
 
 def currency_API():
-    # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
+    xDict = []
     #url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=CNY&apikey=demo'
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     currX = '&from_currency=USD&to_currency=NOK'
@@ -221,7 +218,7 @@ def currency_API():
     return priceX
 
 def crypto_API(symbolX):
-    # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
+    xDict = []
     #url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=CNY&apikey=demo'
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     currX = '&from_currency='+symbolX+'&to_currency=NOK'
