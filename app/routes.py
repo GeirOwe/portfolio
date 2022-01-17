@@ -1,7 +1,7 @@
 from app import app
 from flask import render_template, redirect, url_for
 from app.forms import InputForm
-from app.modelsII import *
+from app.models import *
 
 #the ticker, their current value and currency
 currentTickerData = []
