@@ -195,9 +195,14 @@ def stock_API(symbolX):
     apiData = r.json()
     #fecth the global quote
     xDict = apiData.get('Global Quote')
-    # the closing price is in element 05. price
-    price = xDict['05. price']
-    priceX = float(price.strip(" '"))
+    #check if we have overloaded the API - only 5 calls pr minute
+    if xDict == None:
+        #API is overloaded
+        priceX = 0.0
+    else:
+        # the closing price is in element 05. price
+        price = xDict['05. price']
+        priceX = float(price.strip(" '"))
     return priceX
 
 def currency_API():
@@ -212,9 +217,14 @@ def currency_API():
     apiData = r.json()
     #fecth the global quote
     xDict = apiData.get('Realtime Currency Exchange Rate')
-    # the closing price is in element 5
-    price = xDict['5. Exchange Rate']
-    priceX = float(price.strip(" '"))
+    #check if we have overloaded the API - only 5 calls pr minute
+    if xDict == None:
+        #API is overloaded
+        priceX = 0.0
+    else:
+        # the closing price is in element 5
+        price = xDict['5. Exchange Rate']
+        priceX = float(price.strip(" '"))
     return priceX
 
 def crypto_API(symbolX):
@@ -229,7 +239,12 @@ def crypto_API(symbolX):
     apiData = r.json()
     #fecth the global quote
     xDict = apiData.get('Realtime Currency Exchange Rate')
-    # the closing price is in element 5
-    price = xDict['5. Exchange Rate']
-    priceX = float(price.strip(" '"))
+    #check if we have overloaded the API - only 5 calls pr minute
+    if xDict == None:
+        #API is overloaded
+        priceX = 0.0
+    else:
+        # the closing price is in element 5
+        price = xDict['5. Exchange Rate']
+        priceX = float(price.strip(" '"))
     return priceX
