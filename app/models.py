@@ -164,7 +164,7 @@ def start_the_engine():
     #store the data in a new file
     return totValue, totProfit, portfolioList, today
 
-#store portfolio ad current rices in a new file
+#store portfolio ad current rices in a new file (for Norwegian stocks)
 def storePrices(currentTickerData, today):
     newFile = open('./app/data/currprice.txt', 'w')
     #loop thru all objects and add to txt file
