@@ -1,2 +1,2 @@
-date 16.01.2022
-nbx 8.9 nok
+date 18.02.2022
+nbx 8.75 nok

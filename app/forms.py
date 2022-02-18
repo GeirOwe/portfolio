@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired
 
 class InputForm(FlaskForm):
     ticker = StringField('Ticker', validators=[DataRequired()])
-    currentValue = StringField('Value', validators=[DataRequired()])
+    currValue = StringField('Value', validators=[DataRequired()])
     currency = StringField('Valuta', default="nok")
     send = SubmitField('Ferdig')
     oneMore = SubmitField('Fortsett')

@@ -4,8 +4,8 @@ from app.forms import InputForm
 from app.models import *
 
 #the ticker, their current value and currency
-currentTickerData = []
-portfolioList = []
+currTickerData = []
+portf_list = []
 
 @app.route('/')
 @app.route('/home')
@@ -13,27 +13,27 @@ def home():
     posts = "lets get this party started!"
     return render_template('home.html', title='Home', posts=posts)
 
-@app.route('/input', methods=['GET', 'POST'])
-def input():
+@app.route('/manual', methods=['GET', 'POST'])
+def manual():
     form = InputForm()
     if form.validate_on_submit():
         #sjekk hvilken submit buttion som er trykket
         if form.send.data:
             #lagre data og avslutt
-            currentTickerData.append(form.ticker.data+" "+form.currentValue.data+" "+form.currency.data)
+            currTickerData.append(form.ticker.data+" "+form.currValue.data+" "+form.currency.data)
             #get current date
             today = get_todays_date()
             #store the current prices in a file
-            storePrices(currentTickerData, today)
+            storePrices(currTickerData, today)
             return redirect(url_for('home'))
         if form.oneMore.data:
             #lagre data og fortsett med å lese inn data
-            currentTickerData.append(form.ticker.data+" "+form.currentValue.data+" "+form.currency.data)
-            return redirect(url_for('input'))   
-    return render_template('input.html', title='Input', form=form)
+            currTickerData.append(form.ticker.data+" "+form.currValue.data+" "+form.currency.data)
+            return redirect(url_for('manual'))
+    return render_template('manual.html', title='Input', form=form)
 
 @app.route('/output')
 def output():
     #read current portfolio based on current prices
-    totValue, totProfit, portfolioList, today = start_the_engine()
-    return render_template('output.html', title='Portefølje', posts=portfolioList, value = totValue, profit = totProfit, today=today)
+    tot_value, tot_profit, portf_list, today = start_the_engine()
+    return render_template('output.html', title='Portefølje', posts=portf_list, value = tot_value, profit = tot_profit, today=today)
