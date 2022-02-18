@@ -27,9 +27,9 @@
                 <tr>
                     <td>{{ post.ticker.upper() }}</td>
                     <td>{{ "{:,.0f}". format(post.amount) }}</td>
-                    <td>{{ "{:,.0f}". format(post.buyPrice) }}</td>
-                    <td>{{ "{:,.0f}". format(post.currPrice) }}</td>
-                    <td>{{ "{:,.0f}". format((post.profit / (post.amount*post.buyPrice))*100) }}%</td>
+                    <td>{{ "{:,.0f}". format(post.buy_price) }}</td>
+                    <td>{{ "{:,.0f}". format(post.curr_price) }}</td>
+                    <td>{{ "{:,.0f}". format((post.profit / (post.amount*post.buy_price))*100) }}%</td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -1,172 +1,210 @@
+"""
+This file contains all the logic to ear data and calulate the
+portfolio value
+"""
+
 from decimal import Decimal
 from datetime import date
 import os
 import requests
 
-#read API and update prices
-def get_prices_from_API(theData):
+def get_prices_from_api(ticker_data):
+    """
+    Read the Alpha Vantage API to get current prices
+    for currency, stock & crypto in portfolio
+    """
     stocks = ['nvda','ftnt']
     crypto = ['eth','ada']
     #read current usd rate
-    usdNOK = currency_API()
-    #theData contains a list of Ticker objects in my portfolio
+    usd_nok = currency_API()
+    #ticker_data contains a list of Ticker objects in my portfolio
     i = 0
-    while i < len(theData):
-        ticker = theData[i].get_ticker()
+    while i < len(ticker_data):
+        ticker = ticker_data[i].get_ticker()
         if ticker in stocks:
             #get todays price from API
             price = stock_API(ticker)
-            theData[i].set_currPrice(price*usdNOK)
+            ticker_data[i].set_curr_price(price*usd_nok)
         elif ticker in crypto:
             #get todays price from API - this price is in NOK!
             price = crypto_API(ticker)
-            theData[i].set_currPrice(price)
-        
+            ticker_data[i].set_curr_price(price)
         i += 1
-    return theData
+    return ticker_data
 
-#Tcker class
 class Ticker():
-    def __init__(self, ticker, amount, buyPrice):
+    """
+    create objects for all tickers in portfolio. this is used to
+    get / set all relevant info on a ticker; incl current price.
+    """
+    def __init__(self, ticker, amount, buy_price):
         self.ticker = ticker
         self.amount = amount
-        self.buyPrice = buyPrice
-        self.currPrice = 0.0
-    
+        self.buy_price = buy_price
+        self.curr_price = 0.0
     def get_ticker(self):
+        """
+        get ticker symbol of object
+        """
         return self.ticker
     def get_amount(self):
+        """
+        get the number of shares of object we have in portfolio
+        """
         return self.amount
-    def get_buyPrice(self):
-        return self.buyPrice
-    def get_currPrice(self):
-        return self.currPrice
-    
-    def set_currPrice(self, currPrice):
-        self.currPrice = currPrice
-        return
-    def get_value(self):
-        return self.get_amount() * self.get_currPrice()
-    def calc_profit(self):
-        cost = self.get_amount() * self.get_buyPrice()
-        value = self.get_amount() * self.get_currPrice()
-        return value-cost
-#end class definition
+    def get_buy_price(self):
+        """
+        get the buy price for the investment object (ticker)
+        """
+        return self.buy_price
+    def get_curr_price(self):
+        """
+        get the current price for the investment object (ticker)
+        """
+        return self.curr_price
+    def set_curr_price(self, curr_price):
+        """
+        set the current price for the investment object (ticker)
+        """
+        self.curr_price = curr_price
 
-#get current date
+    def get_value(self):
+        """
+        calculate the current value for the investment object (ticker)
+        """
+        return self.get_amount() * self.get_curr_price()
+    def calc_profit(self):
+        """
+        calculate the current value for the overall portfolio
+        """
+        cost = self.get_amount() * self.get_buy_price()
+        value = self.get_amount() * self.get_curr_price()
+        return value-cost
+
 def get_todays_date():
-    #today = "04.01.2022"
-    dateX = date.today()
+    """
+    fetch todays date
+    """
+    curr_date = date.today()
     #format to dd.mm.YY
-    today = dateX.strftime("%d.%m.%Y")
+    today = curr_date.strftime("%d.%m.%Y")
     return today
 
-#convert to decimal from string
-def str_to_dec(stringDec):
-    stringDec = stringDec.replace(",", ".") 
-    decimal = float(stringDec.strip(" '"))
+def str_to_dec(string_dec):
+    """
+    convert to decimal from string
+    """
+    string_dec = string_dec.replace(",", ".")
+    decimal = float(string_dec.strip(" '"))
     return decimal
 
-# create the ticker object with all input data included
-def get_investment_object(elementTrimmed):
-    #three items separated by space-> ticker, amount, buyprice
-    splitX = elementTrimmed.split()
-    tickerX = splitX[0]
-    amountX = splitX[1]
-    buyPriceX = splitX[2]
+def get_investment_object(ticker_element):
+    """
+    create the ticker object with all input data included
+    three items separated by space-> ticker, amount, buy_price
+    """
+    ticker_item_list = ticker_element.split()
+    ticker = ticker_item_list[0]
+    amount = ticker_item_list[1]
+    buy_price = ticker_item_list[2]
     #convert to decimal from string
-    amount = str_to_dec(amountX)
-    buyPrice = str_to_dec(buyPriceX)
+    amount = str_to_dec(amount)
+    buy_price = str_to_dec(buy_price)
     #create the ticker object
-    tickerObj = Ticker(tickerX, amount, buyPrice)
-    return tickerObj
+    ticker_obj = Ticker(ticker, amount, buy_price)
+    return ticker_obj
 
-#read portfolio from input file
 def get_the_data():
-    #read the data from the file 
-    theData = open('./app/data/portfolio.txt', 'r')
+    """
+    read portfolio from input file
+    """
+    ticker_data = open('./app/data/portfolio.txt', 'r')
     #move data into a list - read a line and remove lineshift
     data_list = []
-    for element in theData:
-        elementTrimmed = element.strip()
+    for element in ticker_data:
+        ticker_element = element.strip()
         #get a investment object for the data in the row
-        ticker = get_investment_object(elementTrimmed)
+        ticker = get_investment_object(ticker_element)
         #add object to a list
         data_list.append(ticker)
     return data_list
 
-# update the current prices of all the tickers
-def addPrices(theData):
-    #get current date
+def addPrices(ticker_data):
+    """
+    update the current prices of all the tickers
+    """
     today = get_todays_date()
     #read the norwegian prices from the file
-    thePrices = open('./app/data/currprice.txt', 'r')
+    thePrices = open('./app/data/curr_price.txt', 'r')
     stocks = ["nbx"]
     # update the current prices of all the tickers
     for element in thePrices:
-        elementTrimmed = element.strip()
+        ticker_element = element.strip()
         # the data element contain -> ticker, current_price, currency
-        splitX = elementTrimmed.split()
+        ticker_item_list = ticker_element.split()
         #add currencies to currency objects and date to date string
-        if splitX[0] in stocks:
-            ticker = splitX[0]
-            tickerValue = str_to_dec(splitX[1])
+        if ticker_item_list[0] in stocks:
+            ticker = ticker_item_list[0]
+            tickerValue = str_to_dec(ticker_item_list[1])
             #update the current price of the ticker in NOK
             i = 0
-            while i < len(theData):
-                if theData[i].get_ticker() == ticker:
-                    theData[i].set_currPrice(tickerValue)
+            while i < len(ticker_data):
+                if ticker_data[i].get_ticker() == ticker:
+                    ticker_data[i].set_curr_price(tickerValue)
                 i += 1
     return today
 
-#loop thru current portfolio and get profit and total value
-def get_totals(theData):
+def get_totals(ticker_data):
+    """
+    loop thru current portfolio and get profit and total value
+    """
     i = 0
     totValue = 0
     totProfit = 0
     portfolioList = []
-    while i < len(theData):
+    while i < len(ticker_data):
         #read profit for the ticker
-        ticker = theData[i].get_ticker()
-        profit = int(theData[i].calc_profit())
-        amount = theData[i].get_amount()
-        buyPrice = theData[i].get_buyPrice()
-        currPrice = theData[i].get_currPrice()
-
+        ticker = ticker_data[i].get_ticker()
+        profit = int(ticker_data[i].calc_profit())
+        amount = ticker_data[i].get_amount()
+        buy_price = ticker_data[i].get_buy_price()
+        curr_price = ticker_data[i].get_curr_price()
         #accumulate totals, profit and portfolio
         totProfit += profit
-        totValue += int(theData[i].get_value())
+        totValue += int(ticker_data[i].get_value())
         #add ticker data to a dictionary
         tickerData = {
-            'ticker': ticker, 
+            'ticker': ticker,
             'profit': profit,
-            'buyPrice': buyPrice,
-            'currPrice': currPrice,
+            'buy_price': buy_price,
+            'curr_price': curr_price,
             'amount': amount
-            }        
+            }
         portfolioList.append(tickerData)
-
         #next
         i += 1
     return totValue, totProfit, portfolioList
 
 def start_the_engine():
+    """
+    get the portfolio data and read them into a list
+    """
     #get the portfolio data and read them into a list
-    theData = get_the_data()
+    ticker_data = get_the_data()
     #read all the current prices from US from the API
-    thePortfolio = get_prices_from_API(theData)
-
+    thePortfolio = get_prices_from_api(ticker_data)
     # add current price to object
     today = addPrices(thePortfolio)
-
     #calculate total portfolio value and total fortjeneste
     totValue, totProfit, portfolioList = get_totals(thePortfolio)
     #store the data in a new file
     return totValue, totProfit, portfolioList, today
 
-#store portfolio ad current rices in a new file (for Norwegian stocks)
 def storePrices(currentTickerData, today):
-    newFile = open('./app/data/currprice.txt', 'w')
+    """
+    store portfolio ad current rices in a new file (for Norwegian stocks)
+    """
+    newFile = open('./app/data/curr_price.txt', 'w')
     #loop thru all objects and add to txt file
     i = 0
     rows = []
@@ -176,22 +214,21 @@ def storePrices(currentTickerData, today):
     while i < len(currentTickerData):
         rows.append(currentTickerData[i] + "\n")
         i += 1
-    
     newFile.writelines(rows)
     newFile.close()
     return
 
-#test if the alpha vantage api works
 def stock_API(symbolX):
+    """
+    read the Aplha Vantage API. alpha vantage api syntax
+    url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=ALPHA_KEY'
+    """
     xDict = []
-    # alpha vantage api syntax
-    #url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=ALPHA_KEY'
     tickerX = 'symbol=' + symbolX
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&'+ tickerX + apiX
     r = requests.get(url)
-
-    # the data received from the API    
+    # the data received from the API
     apiData = r.json()
     #fecth the global quote
     xDict = apiData.get('Global Quote')
@@ -206,14 +243,15 @@ def stock_API(symbolX):
     return priceX
 
 def currency_API():
+    """
+    read the Aplha Vantage API.
+    """
     xDict = []
-    #url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=CNY&apikey=demo'
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     currX = '&from_currency=USD&to_currency=NOK'
     url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currX+apiX
     r = requests.get(url)
-
-    # the data received from the API    
+    # the data received from the API
     apiData = r.json()
     #fecth the global quote
     xDict = apiData.get('Realtime Currency Exchange Rate')
@@ -228,14 +266,15 @@ def currency_API():
     return priceX
 
 def crypto_API(symbolX):
+    """
+    read the Aplha Vantage API.
+    """
     xDict = []
-    #url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=CNY&apikey=demo'
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     currX = '&from_currency='+symbolX+'&to_currency=NOK'
     url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currX+apiX
     r = requests.get(url)
-
-    # the data received from the API    
+    # the data received from the API
     apiData = r.json()
     #fecth the global quote
     xDict = apiData.get('Realtime Currency Exchange Rate')
