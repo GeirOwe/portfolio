@@ -3,9 +3,7 @@ This file contains all the logic to read the data and calculate the
 portfolio value
 """
 
-from decimal import Decimal
 from datetime import date
-import os
 import requests
 
 def get_prices_from_api(ticker_data):
@@ -216,7 +214,6 @@ def storePrices(curr_ticker_list, today):
         i += 1
     newFile.writelines(rows)
     newFile.close()
-    return
 
 def stock_API(symbol):
     """
