@@ -1,5 +1,5 @@
 """
-This file contains all the logic to ear data and calulate the
+This file contains all the logic to read the data and calculate the
 portfolio value
 """
 
@@ -200,7 +200,7 @@ def start_the_engine():
     #store the data in a new file
     return totValue, totProfit, portfolioList, today
 
-def storePrices(currentTickerData, today):
+def storePrices(curr_ticker, today):
     """
     store portfolio ad current rices in a new file (for Norwegian stocks)
     """
@@ -211,8 +211,8 @@ def storePrices(currentTickerData, today):
     #first row is the current date
     rows.append("date "+today+"\n")
     #then add remaining rows from user input
-    while i < len(currentTickerData):
-        rows.append(currentTickerData[i] + "\n")
+    while i < len(curr_ticker):
+        rows.append(curr_ticker[i] + "\n")
         i += 1
     newFile.writelines(rows)
     newFile.close()
