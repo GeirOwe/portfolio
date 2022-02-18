@@ -227,9 +227,9 @@ def stock_API(symbol):
     ticker = 'symbol=' + symbol
     api_key = '&apikey='+'9PN7WYC36TLO0Z09'
     url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&'+ ticker + api_key
-    r = requests.get(url)
+    conn = requests.get(url)
     # the data received from the API
-    apiData = r.json()
+    apiData = conn.json()
     #fecth the global quote
     api_dict = apiData.get('Global Quote')
     #check if we have overloaded the API - only 5 calls pr minute
@@ -250,9 +250,9 @@ def currency_API():
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     currX = '&from_currency=USD&to_currency=NOK'
     url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currX+apiX
-    r = requests.get(url)
+    conn = requests.get(url)
     # the data received from the API
-    apiData = r.json()
+    apiData = conn.json()
     #fecth the global quote
     api_dict = apiData.get('Realtime Currency Exchange Rate')
     #check if we have overloaded the API - only 5 calls pr minute
@@ -273,9 +273,9 @@ def crypto_API(symbolX):
     apiX = '&apikey='+'9PN7WYC36TLO0Z09'
     currX = '&from_currency='+symbolX+'&to_currency=NOK'
     url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currX+apiX
-    r = requests.get(url)
+    conn = requests.get(url)
     # the data received from the API
-    apiData = r.json()
+    apiData = conn.json()
     #fecth the global quote
     api_dict = apiData.get('Realtime Currency Exchange Rate')
     #check if we have overloaded the API - only 5 calls pr minute
