@@ -16,7 +16,7 @@ Your code has been rated at 10.00/10
 from flask import render_template, redirect, url_for
 from app import app
 from app.forms import InputForm
-from app.models import storePrices, get_todays_date, start_the_engine
+from app.models import store_prices, get_todays_date, start_the_engine
 
 #the ticker, their current value and currency
 currTickerData = []
@@ -46,7 +46,7 @@ def manual():
             #get current date
             today = get_todays_date()
             #store the current prices in a file
-            storePrices(currTickerData, today)
+            store_prices(currTickerData, today)
             return redirect(url_for('home'))
         if form.oneMore.data:
             #lagre data og fortsett med å lese inn data

@@ -14,18 +14,18 @@ def get_prices_from_api(ticker_data):
     stocks = ['nvda','ftnt']
     crypto = ['eth','ada']
     #read current usd rate
-    usd_nok = currency_API()
+    usd_nok = currency_api()
     #ticker_data contains a list of Ticker objects in my portfolio
     i = 0
     while i < len(ticker_data):
         ticker = ticker_data[i].get_ticker()
         if ticker in stocks:
             #get todays price from API
-            price = stock_API(ticker)
+            price = stock_api(ticker)
             ticker_data[i].set_curr_price(price*usd_nok)
         elif ticker in crypto:
             #get todays price from API - this price is in NOK!
-            price = crypto_API(ticker)
+            price = crypto_api(ticker)
             ticker_data[i].set_curr_price(price)
         i += 1
     return ticker_data
@@ -116,7 +116,7 @@ def get_the_data():
     """
     read portfolio from input file
     """
-    ticker_data = open('./app/data/portfolio.txt', 'r')
+    ticker_data = open('./app/data/portfolio.txt', 'r', encoding='utf-8')
     #move data into a list - read a line and remove lineshift
     data_list = []
     for element in ticker_data:
@@ -127,28 +127,28 @@ def get_the_data():
         data_list.append(ticker)
     return data_list
 
-def addPrices(ticker_data):
+def add_prices(ticker_data):
     """
     update the current prices of all the tickers
     """
     today = get_todays_date()
     #read the norwegian prices from the file
-    thePrices = open('./app/data/curr_price.txt', 'r')
+    the_prices = open('./app/data/curr_price.txt', 'r', encoding='utf-8')
     stocks = ["nbx"]
     # update the current prices of all the tickers
-    for element in thePrices:
+    for element in the_prices:
         ticker_element = element.strip()
         # the data element contain -> ticker, current_price, currency
         ticker_item_list = ticker_element.split()
         #add currencies to currency objects and date to date string
         if ticker_item_list[0] in stocks:
             ticker = ticker_item_list[0]
-            tickerValue = str_to_dec(ticker_item_list[1])
+            ticker_value = str_to_dec(ticker_item_list[1])
             #update the current price of the ticker in NOK
             i = 0
             while i < len(ticker_data):
                 if ticker_data[i].get_ticker() == ticker:
-                    ticker_data[i].set_curr_price(tickerValue)
+                    ticker_data[i].set_curr_price(ticker_value)
                 i += 1
     return today
 
@@ -157,9 +157,9 @@ def get_totals(ticker_data):
     loop thru current portfolio and get profit and total value
     """
     i = 0
-    totValue = 0
-    totProfit = 0
-    portfolioList = []
+    tot_value = 0
+    tot_profit = 0
+    portf_list = []
     while i < len(ticker_data):
         #read profit for the ticker
         ticker = ticker_data[i].get_ticker()
@@ -168,20 +168,20 @@ def get_totals(ticker_data):
         buy_price = ticker_data[i].get_buy_price()
         curr_price = ticker_data[i].get_curr_price()
         #accumulate totals, profit and portfolio
-        totProfit += profit
-        totValue += int(ticker_data[i].get_value())
+        tot_profit += profit
+        tot_value += int(ticker_data[i].get_value())
         #add ticker data to a dictionary
-        tickerData = {
+        ticker_data = {
             'ticker': ticker,
             'profit': profit,
             'buy_price': buy_price,
             'curr_price': curr_price,
             'amount': amount
             }
-        portfolioList.append(tickerData)
+        portf_list.append(ticker_data)
         #next
         i += 1
-    return totValue, totProfit, portfolioList
+    return tot_value, tot_profit, portf_list
 
 def start_the_engine():
     """
@@ -190,19 +190,19 @@ def start_the_engine():
     #get the portfolio data and read them into a list
     ticker_data = get_the_data()
     #read all the current prices from US from the API
-    thePortfolio = get_prices_from_api(ticker_data)
+    the_portf = get_prices_from_api(ticker_data)
     # add current price to object
-    today = addPrices(thePortfolio)
+    today = add_prices(the_portf)
     #calculate total portfolio value and total fortjeneste
-    totValue, totProfit, portfolioList = get_totals(thePortfolio)
+    tot_value, tot_profit, portf_list = get_totals(the_portf)
     #store the data in a new file
-    return totValue, totProfit, portfolioList, today
+    return tot_value, tot_profit, portf_list, today
 
-def storePrices(curr_ticker_list, today):
+def store_prices(curr_ticker_list, today):
     """
     store portfolio ad current rices in a new file (for Norwegian stocks)
     """
-    newFile = open('./app/data/curr_price.txt', 'w')
+    new_file = open('./app/data/curr_price.txt', 'w', encoding='utf-8')
     #loop thru all objects and add to txt file
     i = 0
     rows = []
@@ -212,10 +212,10 @@ def storePrices(curr_ticker_list, today):
     while i < len(curr_ticker_list):
         rows.append(curr_ticker_list[i] + "\n")
         i += 1
-    newFile.writelines(rows)
-    newFile.close()
+    new_file.writelines(rows)
+    new_file.close()
 
-def stock_API(symbol):
+def stock_api(symbol):
     """
     read the Aplha Vantage API. alpha vantage api syntax
     url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=ALPHA_KEY'
@@ -226,61 +226,61 @@ def stock_API(symbol):
     url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&'+ ticker + api_key
     conn = requests.get(url)
     # the data received from the API
-    apiData = conn.json()
+    api_data = conn.json()
     #fecth the global quote
-    api_dict = apiData.get('Global Quote')
+    api_dict = api_data.get('Global Quote')
     #check if we have overloaded the API - only 5 calls pr minute
     if api_dict is None:
         #API is overloaded
-        priceX = 0.0
+        curr_price = 0.0
     else:
         # the closing price is in element 05. price
         price = api_dict['05. price']
-        priceX = float(price.strip(" '"))
-    return priceX
+        curr_price = float(price.strip(" '"))
+    return curr_price
 
-def currency_API():
+def currency_api():
     """
     read the Aplha Vantage API.
     """
     api_dict = []
-    apiX = '&apikey='+'9PN7WYC36TLO0Z09'
-    currX = '&from_currency=USD&to_currency=NOK'
-    url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currX+apiX
+    api_key = '&apikey='+'9PN7WYC36TLO0Z09'
+    currency = '&from_currency=USD&to_currency=NOK'
+    url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currency+api_key
     conn = requests.get(url)
     # the data received from the API
-    apiData = conn.json()
+    api_data = conn.json()
     #fecth the global quote
-    api_dict = apiData.get('Realtime Currency Exchange Rate')
+    api_dict = api_data.get('Realtime Currency Exchange Rate')
     #check if we have overloaded the API - only 5 calls pr minute
     if api_dict is None:
         #API is overloaded
-        priceX = 0.0
+        curr_price = 0.0
     else:
         # the closing price is in element 5
         price = api_dict['5. Exchange Rate']
-        priceX = float(price.strip(" '"))
-    return priceX
+        curr_price = float(price.strip(" '"))
+    return curr_price
 
-def crypto_API(symbolX):
+def crypto_api(symbol):
     """
     read the Aplha Vantage API.
     """
     api_dict = []
-    apiX = '&apikey='+'9PN7WYC36TLO0Z09'
-    currX = '&from_currency='+symbolX+'&to_currency=NOK'
-    url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currX+apiX
+    api_key = '&apikey='+'9PN7WYC36TLO0Z09'
+    currency = '&from_currency='+symbol+'&to_currency=NOK'
+    url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currency+api_key
     conn = requests.get(url)
     # the data received from the API
-    apiData = conn.json()
+    api_data = conn.json()
     #fecth the global quote
-    api_dict = apiData.get('Realtime Currency Exchange Rate')
+    api_dict = api_data.get('Realtime Currency Exchange Rate')
     #check if we have overloaded the API - only 5 calls pr minute
     if api_dict is None:
         #API is overloaded
-        priceX = 0.0
+        curr_price = 0.0
     else:
         # the closing price is in element 5
         price = api_dict['5. Exchange Rate']
-        priceX = float(price.strip(" '"))
-    return priceX
+        curr_price = float(price.strip(" '"))
+    return curr_price
