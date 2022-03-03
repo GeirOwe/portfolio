@@ -134,7 +134,7 @@ def add_prices(ticker_data):
     today = get_todays_date()
     #read the norwegian prices from the file
     the_prices = open('./app/data/curr_price.txt', 'r', encoding='utf-8')
-    stocks = ["nbx"]
+    stocks = ["nbx", "skagen"]
     # update the current prices of all the tickers
     for element in the_prices:
         ticker_element = element.strip()
@@ -171,14 +171,14 @@ def get_totals(ticker_data):
         tot_profit += profit
         tot_value += int(ticker_data[i].get_value())
         #add ticker data to a dictionary
-        ticker_data = {
+        ticker_info = {
             'ticker': ticker,
             'profit': profit,
             'buy_price': buy_price,
             'curr_price': curr_price,
             'amount': amount
             }
-        portf_list.append(ticker_data)
+        portf_list.append(ticker_info)
         #next
         i += 1
     return tot_value, tot_profit, portf_list
