@@ -1,3 +1,4 @@
 date 18.02.2022
 nbx 9.5 nok
 skagen 2702.1777 nok
+eqnr 304 nok
