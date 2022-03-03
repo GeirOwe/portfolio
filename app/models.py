@@ -134,7 +134,7 @@ def add_prices(ticker_data):
     today = get_todays_date()
     #read the norwegian prices from the file
     the_prices = open('./app/data/curr_price.txt', 'r', encoding='utf-8')
-    stocks = ["nbx", "skagen"]
+    stocks = ["nbx", "skagen", "eqnr"]
     # update the current prices of all the tickers
     for element in the_prices:
         ticker_element = element.strip()
