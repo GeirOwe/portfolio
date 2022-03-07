@@ -1,4 +1,4 @@
 date 18.02.2022
-nbx 8 nok
-skagen 2702.1777 nok
-eqnr 295 nok
+nbx 8.55 nok
+skagen 2750 nok
+eqnr 316 nok
