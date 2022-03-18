@@ -11,7 +11,7 @@ def get_prices_from_api(ticker_data):
     Read the Alpha Vantage API to get current prices
     for currency, stock & crypto in portfolio
     """
-    stocks = ['nvda','ftnt']
+    stocks = ['nvda','ftnt', 'eqnr']
     crypto = ['eth','ada']
     #read current usd rate
     usd_nok = currency_api()
@@ -20,6 +20,9 @@ def get_prices_from_api(ticker_data):
     while i < len(ticker_data):
         ticker = ticker_data[i].get_ticker()
         if ticker in stocks:
+            #equinor; need to add reference to oslo stock exchange
+            #if ticker == 'eqnr':
+            #    ticker = 'EQNR.OL'
             #get todays price from API
             price = stock_api(ticker)
             ticker_data[i].set_curr_price(price*usd_nok)
