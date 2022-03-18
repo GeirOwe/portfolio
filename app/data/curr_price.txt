@@ -1,4 +1,4 @@
-date 18.02.2022
-nbx 8.55 nok
+date 18.03.2022
+nbx 8.25 nok
 skagen 2750 nok
-eqnr 316 nok
+eqnr 297.9 nok
