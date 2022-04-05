@@ -1,0 +1,6 @@
+eth 24.5
+ada 39000
+nvda 4000
+ftnt 5000
+nbx 50
+skagen 5000

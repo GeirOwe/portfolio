@@ -38,10 +38,11 @@ class Ticker():
     create objects for all tickers in portfolio. this is used to
     get / set all relevant info on a ticker; incl current price.
     """
-    def __init__(self, ticker, amount, buy_price):
+    def __init__(self, ticker, amount, buy_price,price_target):
         self.ticker = ticker
         self.amount = amount
         self.buy_price = buy_price
+        self.price_target = price_target
         self.curr_price = 0.0
     def get_ticker(self):
         """
@@ -63,6 +64,11 @@ class Ticker():
         get the current price for the investment object (ticker)
         """
         return self.curr_price
+    def get_price_target(self):
+        """
+        get the target price for the investment object (ticker)
+        """
+        return self.price_target
     def set_curr_price(self, curr_price):
         """
         set the current price for the investment object (ticker)
@@ -102,17 +108,19 @@ def str_to_dec(string_dec):
 def get_investment_object(ticker_element):
     """
     create the ticker object with all input data included
-    three items separated by space-> ticker, amount, buy_price
+    three items separated by space-> ticker, amount, buy_price, price_target
     """
     ticker_item_list = ticker_element.split()
     ticker = ticker_item_list[0]
     amount = ticker_item_list[1]
     buy_price = ticker_item_list[2]
+    price_target = ticker_item_list[3]
     #convert to decimal from string
     amount = str_to_dec(amount)
     buy_price = str_to_dec(buy_price)
+    price_target = str_to_dec(price_target)
     #create the ticker object
-    ticker_obj = Ticker(ticker, amount, buy_price)
+    ticker_obj = Ticker(ticker, amount, buy_price, price_target)
     return ticker_obj
 
 def get_the_data():
@@ -170,6 +178,7 @@ def get_totals(ticker_data):
         amount = ticker_data[i].get_amount()
         buy_price = ticker_data[i].get_buy_price()
         curr_price = ticker_data[i].get_curr_price()
+        price_target = ticker_data[i].get_price_target()
         #accumulate totals, profit and portfolio
         tot_profit += profit
         tot_value += int(ticker_data[i].get_value())
@@ -179,6 +188,7 @@ def get_totals(ticker_data):
             'profit': profit,
             'buy_price': buy_price,
             'curr_price': curr_price,
+            'price_target': price_target,
             'amount': amount
             }
         portf_list.append(ticker_info)

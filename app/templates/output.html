@@ -17,9 +17,9 @@
             <tr>
                 <th>Aktiva</th>
                 <th>Andeler</th>
-                <th>Pålydende</th>
+                <th>Kursmål</th>
                 <th>Kurs nå</th>
-                <th>Fortjeneste</th>
+                <th>Verdi</th>
             </tr>
         </thead>
         <tbody>
@@ -27,9 +27,9 @@
                 <tr>
                     <td>{{ post.ticker.upper() }}</td>
                     <td>{{ "{:,.0f}". format(post.amount) }}</td>
-                    <td>{{ "{:,.0f}". format(post.buy_price) }}</td>
+                    <td>{{ "{:,.0f}". format(post.price_target) }}</td>
                     <td>{{ "{:,.0f}". format(post.curr_price) }}</td>
-                    <td>{{ "{:,.0f}". format((post.profit / (post.amount*post.buy_price))*100) }}%</td>
+                    <td>{{ "{:,.0f}". format(post.amount*post.curr_price) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
