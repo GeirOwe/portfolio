@@ -1,3 +1,3 @@
 date 28.03.2022
-nbx 7.45 nok
-skagen 2750 nok
+nbx 6.25 nok
+skagen 2775 nok
