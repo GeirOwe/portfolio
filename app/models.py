@@ -31,7 +31,7 @@ def get_prices_from_api(ticker_data):
             price = crypto_api(ticker)
             ticker_data[i].set_curr_price(price)
         i += 1
-    return ticker_data
+    return ticker_data, usd_nok
 
 class Ticker():
     """
@@ -203,13 +203,13 @@ def start_the_engine():
     #get the portfolio data and read them into a list
     ticker_data = get_the_data()
     #read all the current prices from US from the API
-    the_portf = get_prices_from_api(ticker_data)
+    the_portf, usd_nok = get_prices_from_api(ticker_data)
     # add current price to object
     today = add_prices(the_portf)
     #calculate total portfolio value and total fortjeneste
     tot_value, tot_profit, portf_list = get_totals(the_portf)
     #store the data in a new file
-    return tot_value, tot_profit, portf_list, today
+    return tot_value, tot_profit, portf_list, today, usd_nok
 
 def store_prices(curr_ticker_list, today):
     """
