@@ -198,7 +198,7 @@ def get_totals(ticker_data):
 
 def start_the_engine():
     """
-    get the portfolio data and read them into a list
+    get the portfolio data and read them into a list.
     """
     #get the portfolio data and read them into a list
     ticker_data = get_the_data()
