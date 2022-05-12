@@ -1,5 +1,4 @@
-eth 24.5
-ada 39000
+ada 24.5
 nvda 4000
 ftnt 5000
 nbx 50
