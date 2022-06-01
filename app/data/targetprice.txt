@@ -1,4 +1,4 @@
-ada 24.5
+ada 24
 nvda 4000
 ftnt 5000
 nbx 50
