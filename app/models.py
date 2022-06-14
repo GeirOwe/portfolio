@@ -170,6 +170,7 @@ def get_totals(ticker_data):
     i = 0
     tot_value = 0
     tot_profit = 0
+    max_potential = 0
     portf_list = []
     while i < len(ticker_data):
         #read profit for the ticker
@@ -182,6 +183,7 @@ def get_totals(ticker_data):
         #accumulate totals, profit and portfolio
         tot_profit += profit
         tot_value += int(ticker_data[i].get_value())
+        max_potential += int(amount * price_target)
         #add ticker data to a dictionary
         ticker_info = {
             'ticker': ticker,
@@ -194,7 +196,7 @@ def get_totals(ticker_data):
         portf_list.append(ticker_info)
         #next
         i += 1
-    return tot_value, tot_profit, portf_list
+    return tot_value, tot_profit, portf_list, max_potential
 
 def start_the_engine():
     """
@@ -207,9 +209,9 @@ def start_the_engine():
     # add current price to object
     today = add_prices(the_portf)
     #calculate total portfolio value and total fortjeneste
-    tot_value, tot_profit, portf_list = get_totals(the_portf)
+    tot_value, tot_profit, portf_list, max_potential = get_totals(the_portf)
     #store the data in a new file
-    return tot_value, tot_profit, portf_list, today, usd_nok
+    return tot_value, tot_profit, portf_list, today, usd_nok, max_potential
 
 def store_prices(curr_ticker_list, today):
     """

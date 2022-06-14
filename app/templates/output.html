@@ -7,6 +7,8 @@
     <div><p>Total verdi: {{ "{:,.0f}". format(value) }}</p>
         <p>Total fortjeneste: {{ "{:,.0f}". format(profit) }}</p></div>
         <p>USD kurs: {{ "{:,.2f}". format(usd_nok) }}</p></div>
+        <br>
+        <p>Potensiale: {{ "{:,.0f}". format(max) }}</p>
     <br><br>
     {% if form %}
         {{ wtf.quick_form(form) }}

@@ -61,6 +61,6 @@ def output():
     """
     #read current portfolio based on current prices
     portf_list = []
-    tot_value, tot_profit, portf_list, today, usd_nok = start_the_engine()
+    tot_value, tot_profit, portf_list, today, usd_nok, max_potential = start_the_engine()
     return render_template('output.html', title='Portefølje', posts=portf_list, \
-        value = tot_value, profit = tot_profit, today=today, usd_nok = usd_nok)
+        value = tot_value, profit = tot_profit, today=today, usd_nok = usd_nok, max = max_potential)
