@@ -82,7 +82,7 @@ class Ticker():
         return self.get_amount() * self.get_curr_price()
     def calc_profit(self):
         """
-        calculate the current value for the overall portfolio
+        calculate the current profit for the investment object (ticker)
         """
         cost = self.get_amount() * self.get_buy_price()
         value = self.get_amount() * self.get_curr_price()

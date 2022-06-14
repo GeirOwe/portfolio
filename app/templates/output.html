@@ -16,20 +16,20 @@
         <thead>
             <tr>
                 <th>Aktiva</th>
-                <th>Andeler</th>
                 <th>Kursmål</th>
                 <th>Kurs nå</th>
                 <th>Verdi</th>
+                <th>%</th>
             </tr>
         </thead>
         <tbody>
             {% for post in posts %}
                 <tr>
                     <td>{{ post.ticker.upper() }}</td>
-                    <td>{{ "{:,.0f}". format(post.amount) }}</td>
                     <td>{{ "{:,.0f}". format(post.price_target) }}</td>
                     <td>{{ "{:,.0f}". format(post.curr_price) }}</td>
                     <td>{{ "{:,.0f}". format(post.amount*post.curr_price) }}</td>
+                    <td>{{ "{:,.0f}". format((post.profit / (post.amount*post.curr_price)) * 100) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
