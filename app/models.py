@@ -138,14 +138,14 @@ def get_the_data():
         data_list.append(ticker)
     return data_list
 
-def add_prices(ticker_data):
+def add_prices(ticker_data, stockList):
     """
     update the current prices of all the tickers
     """
     today = get_todays_date()
     #read the norwegian prices from the file
     the_prices = open('./app/data/curr_price.txt', 'r', encoding='utf-8')
-    stocks = ["nbx", "skagen", "eqnr"]
+    stocks = stockList
     # update the current prices of all the tickers
     for element in the_prices:
         ticker_element = element.strip()
@@ -207,7 +207,8 @@ def start_the_engine():
     #read all the current prices from US from the API
     the_portf, usd_nok = get_prices_from_api(ticker_data)
     # add current price to object
-    today = add_prices(the_portf)
+    stocks = ["nbx", "skagen", "eqnr", "ada", "nvda", "ftnt"]
+    today = add_prices(the_portf, stocks)
     #calculate total portfolio value and total fortjeneste
     tot_value, tot_profit, portf_list, max_potential = get_totals(the_portf)
     #store the data in a new file
