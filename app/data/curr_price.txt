@@ -1,6 +1,6 @@
 date 28.03.2022
 nbx 5 nok
-skagen 2861 nok
+skagen 2911 nok
 ftnt 525 nok
 nvda 1846 nok
 ada 5.5 nok
