@@ -1,6 +1,6 @@
-date 28.03.2022
-nbx 5 nok
-skagen 2911 nok
-ftnt 525 nok
-nvda 1846 nok
-ada 5.5 nok
+date 31.12.2022
+nbx 2.45 nok
+skagen 2700 nok
+ftnt 487 nok
+nvda 1521 nok
+ada 3.45 nok
