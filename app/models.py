@@ -140,7 +140,7 @@ def get_the_data():
 
 def add_prices(ticker_data, stockList):
     """
-    update the current prices of all the tickers
+    update the current prices of all the tickers that do not have an API
     """
     today = get_todays_date()
     #read the norwegian prices from the file
