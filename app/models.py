@@ -207,7 +207,8 @@ def start_the_engine():
     #read all the current prices from US from the API
     the_portf, usd_nok = get_prices_from_api(ticker_data)
     # add current price to object
-    stocks = ["nbx", "skagen", "eqnr", "ada", "nvda", "ftnt"]
+    #stocks = ["nbx", "skagen", "eqnr", "ada", "nvda", "ftnt"]
+    stocks = ["nbx", "skagen"]
     today = add_prices(the_portf, stocks)
     #calculate total portfolio value and total fortjeneste
     tot_value, tot_profit, portf_list, max_potential = get_totals(the_portf)
