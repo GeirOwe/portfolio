@@ -3,4 +3,4 @@ nbx 2.45 nok
 skagen 2700 nok
 ftnt 487 nok
 nvda 1521 nok
-ada 3.45 nok
+ada 3.0 nok
