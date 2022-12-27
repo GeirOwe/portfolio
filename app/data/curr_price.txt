@@ -1,4 +1,4 @@
-date 31.12.2022
+date 27.12.2022
 nbx 2.45 nok
 skagen 2700 nok
 ftnt 487 nok
