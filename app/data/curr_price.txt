@@ -1,6 +1,6 @@
 date 27.12.2022
 nbx 2.45 nok
-skagen 2875 nok
+skagen 2836 nok
 ftnt 487 nok
 nvda 1521 nok
 ada 3.0 nok
