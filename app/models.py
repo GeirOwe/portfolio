@@ -11,8 +11,8 @@ def get_prices_from_api(ticker_data):
     Read the Alpha Vantage API to get current prices
     for currency, stock & crypto in portfolio
     """
-    stocks = ['nvda','ftnt', 'tsla', 'eqnr']
-    crypto = ['eth','ada']
+    stocks = ['nvda','ftnt', 'tsla']
+    crypto = ['ada']
     #read current usd rate
     usd_nok = currency_api()
     #ticker_data contains a list of Ticker objects in my portfolio
@@ -204,8 +204,7 @@ def start_the_engine():
     #read all the current prices from US from the API
     the_portf, usd_nok = get_prices_from_api(ticker_data)
     # add current price to object
-    #stocks = ["nbx", "skagen", "eqnr", "ada", "nvda", "ftnt"]
-    stocks = ["nbx", "skagen"]
+    stocks = ["nbx", "skagen", 'eqnr']
     today = add_prices(the_portf, stocks)
     #calculate total portfolio value and total fortjeneste
     tot_value, tot_profit, portf_list, max_potential = get_totals(the_portf)
