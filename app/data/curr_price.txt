@@ -4,5 +4,5 @@ skagen 3098 nok
 ftnt 487 nok
 nvda 1521 nok
 ada 3.0 nok
-eqnr 319.95 nok
+eqnr 328 nok
 tsla 2000 nok
