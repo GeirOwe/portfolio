@@ -11,7 +11,7 @@ def get_prices_from_api(ticker_data):
     Read the Alpha Vantage API to get current prices
     for currency, stock & crypto in portfolio
     """
-    stocks = ['nvda','eqnr']
+    stocks = ['tsla','eqnr']
     crypto = ['ada']
     #read current usd rate
     usd_nok = currency_api()
