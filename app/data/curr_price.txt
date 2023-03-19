@@ -1,6 +1,6 @@
 date 27.12.2022
 nbx 2.45 nok
-skagen 3021 nok
+skagen 3050 nok
 ada 3.0 nok
 eqnr 328 nok
 tsla 2000 nok
