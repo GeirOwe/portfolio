@@ -4,3 +4,4 @@ skagen 3322 nok
 ada 3.0 nok
 eqnr 328 nok
 tsla 2000 nok
+ftnt 793 nok
