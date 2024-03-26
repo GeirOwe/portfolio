@@ -85,7 +85,7 @@ class Ticker():
         value = self.get_amount() * self.get_curr_price()
         return value-cost
 
-def get_todays_date():
+def get_todays_date(): 
     """
     fetch todays date
     """
@@ -96,7 +96,7 @@ def get_todays_date():
 
 def str_to_dec(string_dec):
     """
-    convert to decimal from string
+    convert to decimal from string.
     """
     string_dec = string_dec.replace(",", ".")
     decimal = float(string_dec.strip(" '"))

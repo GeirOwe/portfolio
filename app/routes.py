@@ -5,11 +5,16 @@ It uses the Aplha Vantage API to read the current values and the usd -> nok
 currency value. my Aplha Vantage key is listed in the .env file
     alpha vantage api syntax
     url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=ALPHA_KEY'
-The applicaton is hosted at Heroku
 
  --
 (virtu) geirowe@geirs-imac portfolio % python3 -m pylint ./app/routes.py
 Your code has been rated at 10.00/10 
+
+--
+to manually sync code to github
+connect to the github repo: git clone git@github.com:GeirOwe/portfolio.git
+git add . or git add <filename> or git add folder/
+git commit -m "<what changes was done>"
 
 """
 
@@ -62,5 +67,8 @@ def output():
     #read current portfolio based on current prices
     portf_list = []
     tot_value, tot_profit, portf_list, today, usd_nok, max_potential = start_the_engine()
+    #calculate profit percentage
+    start_value = tot_value - tot_profit
+    tot_profit_pct = round(((tot_profit) / (start_value)) * 100)
     return render_template('output.html', title='Portefølje', posts=portf_list, \
-        value = tot_value, profit = tot_profit, today=today, usd_nok = usd_nok, max = max_potential)
+        value = tot_value, profit = tot_profit, profit_pct = tot_profit_pct, today=today, usd_nok = usd_nok, max = max_potential)

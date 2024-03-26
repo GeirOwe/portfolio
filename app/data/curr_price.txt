@@ -1,7 +1,7 @@
 date 27.12.2022
-nbx 1.45 nok
-skagen 3291 nok
-ada 3.0 nok
+nbx 1.1 nok
+skagen 3750 nok
+ada 1.0 nok
 eqnr 328 nok
 tsla 2000 nok
 ftnt 793 nok
