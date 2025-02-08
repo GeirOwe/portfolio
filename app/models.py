@@ -11,7 +11,7 @@ def get_prices_from_api(ticker_data):
     Read the Alpha Vantage API to get current prices
     for currency, stock & crypto in portfolio
     """
-    stocks = ['tsla','ftnt', 'eqnr']
+    stocks = ['tsla','amzn', 'eqnr']
     crypto = ['ada']
     #read current usd rate
     usd_nok = currency_api()
@@ -281,7 +281,7 @@ def crypto_api(symbol):
     """
     api_dict = []
     api_key = '&apikey='+'9PN7WYC36TLO0Z09'
-    currency = '&from_currency='+symbol+'&to_currency=NOK'
+    currency = '&from_currency='+symbol.upper()+'&to_currency=NOK'
     url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currency+api_key
     conn = requests.get(url)
     # the data received from the API
@@ -291,7 +291,7 @@ def crypto_api(symbol):
     #check if we have overloaded the API - only 5 calls pr minute
     if api_dict is None:
         #API is overloaded
-        curr_price = 0.0
+        curr_price = 10.00
     else:
         # the closing price is in element 5
         price = api_dict['5. Exchange Rate']
