@@ -1,7 +1,7 @@
 date 27.12.2022
-nbx 0.5 nok
-skagen 4254 nok
-ada 8.5 nok
-eqnr 265 nok
-tsla 3450 nok
-amzn 2325 nok
+nbx 0.8 nok
+skagen 3942 nok
+ada 6 nok
+eqnr 255 nok
+tsla 3300 nok
+amzn 2200 nok

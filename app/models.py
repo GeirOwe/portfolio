@@ -291,7 +291,7 @@ def crypto_api(symbol):
     #check if we have overloaded the API - only 5 calls pr minute
     if api_dict is None:
         #API is overloaded
-        curr_price = 8.2
+        curr_price = 6.0
     else:
         # the closing price is in element 5
         price = api_dict['5. Exchange Rate']
