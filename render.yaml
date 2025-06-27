@@ -3,4 +3,4 @@ services:
     name: portfolio-app
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "python app/main.py"  # Change to your entry point
+    startCommand: "python main.py"  # Change to your entry point
