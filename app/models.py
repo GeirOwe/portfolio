@@ -26,7 +26,7 @@ def get_prices_from_api(ticker_data):
         elif ticker in crypto:
             #get todays price from API - this price is in NOK!
             price = crypto_api(ticker)
-            ticker_data[i].set_curr_price(price)
+            ticker_data[i].set_curr_price(price*usd_nok)
         i += 1
     return ticker_data, usd_nok
 
@@ -281,7 +281,7 @@ def crypto_api(symbol):
     """
     api_dict = []
     api_key = '&apikey='+'9PN7WYC36TLO0Z09'
-    currency = '&from_currency='+symbol.upper()+'&to_currency=NOK'
+    currency = '&from_currency='+symbol.upper()+'&to_currency=USD'
     url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE'+currency+api_key
     conn = requests.get(url)
     # the data received from the API
