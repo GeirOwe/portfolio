@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: portfolio-app
+    name: portfolio
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "python main.py"  # Change to your entry point
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main
