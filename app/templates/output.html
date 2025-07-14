@@ -12,7 +12,6 @@
     <br><br>
     {% if form %}
         {{ wtf.quick_form(form) }}
-
     {% endif %}
     <table class="table table-hover">
         <thead>
@@ -21,7 +20,8 @@
                 <th>Kursmål</th>
                 <th>Kurs nå</th>
                 <th>Verdi</th>
-                <th>%</th>
+                <th>Avkastning</th>
+                <th>Andel</th>
             </tr>
         </thead>
         <tbody>
@@ -32,9 +32,9 @@
                     <td>{{ "{:,.0f}". format(post.curr_price) }}</td>
                     <td>{{ "{:,.0f}". format(post.amount*post.curr_price) }}</td>
                     <td>{{ "{:,.0f}". format(((post.amount*post.curr_price) / (post.amount*post.buy_price) -1) * 100) }}</td>
+                    <td>{{ "{:,.0f}". format((post.amount*post.curr_price / value) * 100) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-
 {% endblock %}

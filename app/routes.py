@@ -67,8 +67,13 @@ def output():
     #read current portfolio based on current prices
     portf_list = []
     tot_value, tot_profit, portf_list, today, usd_nok, max_potential = start_the_engine()
+    
+    # No need to calculate percentages here since we're using dictionary objects
+    # and the template already calculates the percentage
+    
     #calculate profit percentage
     start_value = tot_value - tot_profit
     tot_profit_pct = round(((tot_profit) / (start_value)) * 100)
     return render_template('output.html', title='Portefølje', posts=portf_list, \
-        value = tot_value, profit = tot_profit, profit_pct = tot_profit_pct, today=today, usd_nok = usd_nok, max = max_potential)
+        value = tot_value, profit = tot_profit, profit_pct = tot_profit_pct, \
+        today=today, usd_nok = usd_nok, max = max_potential)
