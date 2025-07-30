@@ -2,6 +2,7 @@ date 27.12.2022
 nbx 0.8 nok
 skagen 4085 nok
 ada 6 nok
-eqnr 255 nok
 tsla 3300 nok
 amzn 2200 nok
+nvda 1805 nok
+eqnr 275 nok
