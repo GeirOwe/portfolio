@@ -6,3 +6,4 @@ tsla 3300 nok
 amzn 2200 nok
 nvda 1805 nok
 eqnr 275 nok
+bank 380000 nok
